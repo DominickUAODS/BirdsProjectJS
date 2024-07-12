@@ -45,10 +45,10 @@ hr {
     border: 1px solid #000;
 }
 
-/* .correct {
+.correct {
     color: green;
     font-weight: bold;
-} */
+}
 
 #inputContainer {
     display: flex;

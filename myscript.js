@@ -10,7 +10,7 @@ ctx.fillStyle = "orange";
 ctx.strokeStyle = "aqua";
 ctx.lineWidth = 1;
 
-//ctx.fillRect(50, 50, 100, 100);
+ctx.fillrect(50, 50, 100, 100);
 
 //canvas.height = 500;
 //canvas.width = 500;
