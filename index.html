@@ -1,22 +1,389 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <link href="styles.css" rel="stylesheet">
-    <script type="module" src="./myscript.js"></script> 
-    <!-- <script type="module" src="./myscript.js"></script>  -->
-    <!-- <script type="module" src="./script.js"></script>  -->
+    <title>BirdsProjectJS</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
 
+        body, html {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+        }
+        .main-container {
+            background-color: black;
+            height: 100vh;
+            padding: 2%;
+            box-sizing: border-box;
+            display: flex;
+            flex-direction: column;
+        }
+        .top-container, .bottom-container {
+            height: 15%;
+            border: 1px solid white;
+            border-radius: 20px;
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+        }
+        .middle-container {
+            flex: 1;
+            display: flex;
+            border: 1px solid white;
+            margin: 2% 0;
+        }
+        .left-container, .right-container {
+            width: 20%;
+            border: 1px solid white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .right-container {
+            margin-left: 2%;
+        }
+        .left-container {
+            margin-right: 2%;
+        }
+        .center-container {
+            flex-grow: 2;
+            border: 1px solid white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 2%;
+        }
+        .top-container-stop, .top-container-start, .top-container-statistic, .top-container-volume,  .top-container-total-count {
+            align-items: center;
+            justify-content: center;
+            display: inline-flex;
+            
+        }
+        .label-top-container-total-count, .label-top-container-total-count-points
+        {
+            font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
+            Segoe UI, Roboto, Helvetica Neue, Arial, Noto Sans, sans-serif,
+            Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol, Noto Color Emoji;
+            font-size: 40px;
+            font-weight: 900;
+            line-height: 1.5;
+            color: #fff;
+
+        }
+        .top-container-total-count, .top-container-stop, .top-container-volume
+        {
+            margin-right: 60px;
+        }
+        .label-top-container-total-count-points, .top-container-statistic
+        {
+            margin-left: 40px ;
+        }
+
+        .top-container-img-bird
+        {
+            width:100px;
+            height: 100px;
+        }
+        .top-container-img-bird img
+        {
+            width:100px;
+            height: auto;
+        }
+       
+        .top-container-total-count
+        {
+            margin-left: 70px;
+        }
+
+
+
+        /* Common styles for button stop and start*/
+        .btn-common,
+        .btn-common *,
+        .btn-common:after,
+        .btn-common:before {
+            border: 0 solid;
+            box-sizing: border-box;
+        }
+
+        .btn-common {
+            -webkit-tap-highlight-color: transparent;
+            appearance: button;
+            background-color: #000;
+            background-image: none;
+            color: #fff;
+            cursor: pointer;
+            font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
+            Segoe UI, Roboto, Helvetica Neue, Arial, Noto Sans, sans-serif,
+            Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol, Noto Color Emoji;
+            font-size: 100%;
+            font-weight: 900;
+            line-height: 1.5;
+            margin: 0;
+            mask-image: radial-gradient(#000, #fff);
+            padding: 0;
+            text-transform: uppercase;
+        }
+
+        .btn-common:disabled {
+            cursor: default;
+        }
+
+        .btn-common:-moz-focusring {
+            outline: auto;
+        }
+
+        .btn-common svg {
+            display: block;
+        }
+
+        .btn-common [hidden] {
+            display: none;
+        }
+
+        .btn-common {
+            border-radius: 99rem;
+            border-width: 2px;
+            overflow: hidden;
+            padding: 0.8rem 3rem;
+            position: relative;
+        }
+
+        .btn-common span {
+            display: grid;
+            inset: 0;
+            place-items: center;
+            position: absolute;
+            transition: opacity 0.2s ease;
+        }
+
+        /* Styles for btn-start */
+        .btn-start .marquee {
+            --spacing: 5em;
+            --start: 0em;
+            --end: 5em;
+            animation: marquee-start 1s linear infinite;
+            animation-play-state: paused;
+            opacity: 0;
+            position: relative;
+            text-shadow: #fff var(--spacing) 0, #fff calc(var(--spacing) * -1) 0,
+                #fff calc(var(--spacing) * -2) 0;
+        }
+
+        .btn-start:hover .marquee {
+            animation-play-state: running;
+            opacity: 1;
+        }
+
+        .btn-start:hover .text {
+            opacity: 0;
+        }
+
+        @keyframes marquee-start {
+            0% {
+                transform: translateX(var(--start));
+            }
+            to {
+                transform: translateX(var(--end));
+            }
+        }
+
+        /* Styles for btn-stop */
+        .btn-stop .marquee {
+            --spacing: 5em;
+            --start: 0em;
+            --end: 5em;
+            animation: marquee-stop 1s linear infinite;
+            animation-play-state: paused;
+            opacity: 0;
+            position: relative;
+            text-shadow: #fff var(--spacing) 0, #fff calc(var(--spacing) * -1) 0,
+                #fff calc(var(--spacing) * -2) 0;
+        }
+
+        .btn-stop:hover .marquee {
+            animation-play-state: running;
+            opacity: 1;
+        }
+
+        .btn-stop:hover .text-start-stop-btn {
+            opacity: 0;
+        }
+
+        @keyframes marquee-stop {
+            0% {
+                transform: translateX(var(--start));
+            }
+            to {
+                transform: translateX(var(--end));
+            }
+        }
+
+        .statistic-btn {
+            width: 9em;
+            height: 3em;
+            border-radius: 30em;
+            font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
+            Segoe UI, Roboto, Helvetica Neue, Arial, Noto Sans, sans-serif,
+            Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol, Noto Color Emoji;
+            font-size: 100%;
+            font-weight: 900;
+            line-height: 1.5;
+            color: #fff;
+            border: none;
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+            box-shadow: 6px 6px 12px #c5c5c5,
+                        -6px -6px 12px #ffffff;
+        }
+
+        .statistic-btn::before {
+            content: '';
+            width: 0;
+            height: 3em;
+            border-radius: 30em;
+            position: absolute;
+            top: 0;
+            left: 0;
+            background-image: linear-gradient(to right, #59ca7d 0%, #f9f047 100%);
+            transition: .5s ease;
+            display: block;
+            z-index: -1;
+        }
+
+        .statistic-btn:hover::before {
+            width: 9em;
+        }
+
+.btn-volume {
+  width: 40px;
+  height: 40px;
+  border-radius: 100%;
+  background-color: rgb(71, 224, 230);
+  overflow: hidden;
+  position: relative;
+}
+.btn-volume-icon {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.5s ease;
+  overflow: hidden;
+  position: relative;
+}
+.btn-volume-input {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  cursor: pointer;
+  z-index: 999;
+}
+.btn-volume-icon:before {
+  content: "";
+  display: flex;
+  width: 0px;
+  height: 0px;
+  border-radius: 100%;
+  transition: all 0.2s ease;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  background-color: rgb(32, 33, 36);
+}
+.btn-volume-input:checked + .btn-volume-icon:before {
+  width: calc(100% + 4px);
+  height: calc(100% + 4px);
+}
+.btn-volume-svg {
+  z-index: 2;
+  color: rgb(32, 33, 36);
+  height: 30px;
+  width: 30px;
+}
+.btn-volume-input:checked + .btn-volume-icon svg {
+  color: rgb(255, 255, 255);
+}
+
+
+    </style>
 </head>
-
 <body>
-    
-   <canvas id="canvas"> </canvas>
-   <canvas id="canvas"> </canvas>
+    <div class="container-fluid main-container">
+        <div class="row top-container">
+            <div class="top-container-statistic">
+                <button class="btn statistic-btn" id="statistic-btn">Statistic</button>
+            </div>
+            <div class=" top-container-start">
+                <button class="btn-common btn-start">
+                    <span class="text">Start</span>
+                    <span aria-hidden="" class="marquee">Start</span>
+                </button>
+            </div>
+            <div class = " top-container-total-count">
+                <label class = "label-top-container-total-count">
+                    Total Count:  
+                </label>
+                <label class = "label-top-container-total-count-points">0</label>
+                </div>
+                <div class = "top-container-img-bird">
+                   <img src = "img/pngegg.png">
+                    </div>
+            <div class=" top-container-stop">
+                <button class="btn-common btn-stop">
+                    <span class="text-start-stop-btn">Stop</span>
+                    <span aria-hidden="" class="marquee">Stop</span>
+                </button>
+            </div>
+            <div class=" top-container-volume">
+                <div class="btn-volume">
+                    <input type="checkbox" class="btn-volume-input" />
+                    <div class="btn-volume-icon">
+                      <svg
+                        viewBox="0 0 24 24"
+                        width="24"
+                        height="24"
+                        stroke="currentColor"
+                        stroke-width="2"
+                        fill="none"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        class="btn-volume-svg"
+                      >
+                        <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+                        <path
+                          d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"
+                        ></path>
+                      </svg>
+                    </div>
+                  </div>
+            </div>
+        </div>
+        <div class="row middle-container">
+            <div class="col left-container">
+                Left
+            </div>
+            <div class="col center-container">
+                Center
+            </div>
+            <div class="col right-container">
+                Right
+            </div>
+        </div>
+        <div class="row bottom-container">
+            <div class="col">
+                Bottom
+            </div>
+        </div>
+    </div>
 
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
-
 </html>
