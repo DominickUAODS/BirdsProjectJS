@@ -20,7 +20,7 @@
             display: flex;
             flex-direction: column;
         }
-        .top-container, .bottom-container {
+        .top-container{
             height: 15%;
             border: 1px solid white;
             border-radius: 20px;
@@ -28,10 +28,10 @@
             flex-direction: row;
             justify-content: space-between;
         }
+
         .middle-container {
             flex: 1;
             display: flex;
-            border: 1px solid white;
             margin: 2% 0;
         }
         .left-container, .right-container {
@@ -40,6 +40,7 @@
             display: flex;
             align-items: center;
             justify-content: center;
+            border-radius: 20px;
         }
         .right-container {
             margin-left: 2%;
@@ -54,6 +55,7 @@
             align-items: center;
             justify-content: center;
             margin: 0 2%;
+            border-radius: 20px;
         }
         .top-container-stop, .top-container-start, .top-container-statistic, .top-container-volume,  .top-container-total-count {
             align-items: center;
@@ -81,15 +83,17 @@
             margin-left: 40px ;
         }
 
-        .top-container-img-bird
-        {
-            width:100px;
-            height: 100px;
-        }
-        .top-container-img-bird img
+        .img-bird-top
         {
             width:100px;
             height: auto;
+        }
+
+        .img-diamant-top
+        {
+            width:30px;
+            height: 30px;
+            margin-left: 10px;
         }
        
         .top-container-total-count
@@ -310,6 +314,199 @@
   color: rgb(255, 255, 255);
 }
 
+.img-upgrade-cart
+{
+    width: 50px;
+    height: 50px;
+    margin-left: 20px;
+}
+
+.upgrade-div
+{
+ display: flex;
+ flex-direction: row;
+ justify-content: space-between;
+ align-items: top;
+}
+
+.right-container
+{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: top;
+    border-radius: 20px;
+
+}
+
+.upgrade-label
+{
+    font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
+            Segoe UI, Roboto, Helvetica Neue, Arial, Noto Sans, sans-serif,
+            Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol, Noto Color Emoji;
+            font-size: 36px;
+            font-weight: 900;
+            color: white;
+}
+
+.img-sling-cart, .img-dron-cart, .img-tnt-cart
+{
+    width:60px;
+    height:60px;
+}
+
+.upgrade-items-div
+{
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 40px;
+}
+
+.upgrade-items-div button
+{
+    border: 1px solid white;
+    background-color: #000;
+    border-radius: 20px;
+    width: 110px;
+    height:110px;
+    font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
+            Segoe UI, Roboto, Helvetica Neue, Arial, Noto Sans, sans-serif,
+            Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol, Noto Color Emoji;
+    font-size: 15px;
+    font-weight: 900;
+    color: white;
+    margin-top: 15px;
+    margin-left: 15px;
+
+
+}
+
+.total-price
+{
+    margin-top: 15px;
+}
+
+
+.dron-div,.tnt-div, .sling-div 
+{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
+            Segoe UI, Roboto, Helvetica Neue, Arial, Noto Sans, sans-serif,
+            Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol, Noto Color Emoji;
+    font-size: 20px;
+    font-weight: 900;
+    color: white;
+
+    align-items: center;
+
+}
+
+.desc-dron
+{
+    display: flex;
+text-align: center;
+animation: color-change 0.7s infinite;
+
+}
+
+.desc-tnt-label
+{
+    padding-left: 15px;
+    animation: color-change 0.7s infinite;
+}
+
+.desc-sling-label
+{
+    padding-left: 55px;
+    animation: color-change 0.7s infinite;
+}
+@keyframes color-change {
+  0% {
+    color:  rgb(61, 132, 230);
+  }
+
+  50% {
+    color: rgb(248, 90, 90);
+  }
+
+  100% {
+    color: rgb(61, 132, 230);
+  }
+}
+
+.img-equipment-bird
+{
+    width: 80px;
+    height: 80px;
+    margin-left: 20px;
+}
+
+.equipment-div
+{
+ display: flex;
+ flex-direction: row;
+ justify-content: space-between;
+ align-items: top;
+}
+
+.left-container
+{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: top;
+    border-radius: 20px;
+
+}
+
+.equipment-label
+{
+    font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
+            Segoe UI, Roboto, Helvetica Neue, Arial, Noto Sans, sans-serif,
+            Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol, Noto Color Emoji;
+            font-size: 36px;
+            font-weight: 900;
+            color: white;
+}
+
+.img-sling-eq, .img-dron-eq, .img-tnt-eq
+{
+    width:60px;
+    height:60px;
+}
+
+.equipment-items-div
+{
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 40px;
+}
+
+.equipment-items-div button
+{
+    border: 1px solid white;
+    background-color: #000;
+    border-radius: 20px;
+    width: 110px;
+    height:110px;
+    font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
+            Segoe UI, Roboto, Helvetica Neue, Arial, Noto Sans, sans-serif,
+            Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol, Noto Color Emoji;
+    font-size: 15px;
+    font-weight: 900;
+    color: white;
+    margin-top: 15px;
+    margin-left: 15px;
+
+
+}
+
+.dron-eq-have, .tnt-eq-have, .sling-eq-have
+{
+    margin-top: 15px;
+}
 
     </style>
 </head>
@@ -330,9 +527,10 @@
                     Total Count:  
                 </label>
                 <label class = "label-top-container-total-count-points">0</label>
+                <img src = "img/diamant.png" class = "img-diamant-top">
                 </div>
                 <div class = "top-container-img-bird">
-                   <img src = "img/pngegg.png">
+                   <img src = "img/bird.png" class = "img-bird-top">
                     </div>
             <div class=" top-container-stop">
                 <button class="btn-common btn-stop">
@@ -366,18 +564,88 @@
         </div>
         <div class="row middle-container">
             <div class="col left-container">
-                Left
+                <div class = "equipment-div">
+                    <label class = "equipment-label">Helpers</label>
+                    <img src = "img/bird2.png" class = "img-equipment-bird">
+                </div>
+                <div class = "equipment-items-div">
+                    <div class = "sling-div-eq">
+                    <button class = "sling-button-eq">
+                        <img src = "img/rogatka.png" class = "img-sling-eq">
+                        <div class = "sling-eq-have">
+                            <label class = "sling-label">You have: </label>
+                            <label class = "sling-label-have">0</label>
+                        </div>
+                    </button>
+                    </div>
+                    <div class="dron-div-eq">
+                    <button class = "dron-button-eq">
+                        <img src = "img/dron.png" class = "img-dron-eq">
+                        <div class = "dron-eq-have">
+                            <label class = "dron-label">You have: </label>
+                            <label class = "dron-label-have">0</label>
+                        </div>
+                    </button>
+                    </div>
+                    <din class = "tnt-div-eq">
+                    <button class = "tnt-button-eq">
+                        <img src = "img/tnt.png" class = "img-tnt-eq">
+                        <div class = "tnt-eq-have">
+                        <label class = "tnt-label">You have: </label>
+                        <label class = "tnt-label-have">0</label>
+                        </div>
+                    </button>
+                </div>
             </div>
             <div class="col center-container">
                 Center
             </div>
             <div class="col right-container">
-                Right
+                <div class = "upgrade-div">
+                    <label class = "upgrade-label">Upgrade</label>
+                    <img src = "img/cart.png" class = "img-upgrade-cart">
+                </div>
+                <div class = "upgrade-items-div">
+                    <div class = "sling-div">
+                    <div class = "desc-sling">
+                        <label class = "desc-sling-label">X2</label>
+                    </div>
+                    <button class = "sling-button">
+                        <img src = "img/rogatka.png" class = "img-sling-cart">
+                        <div class = "total-price">
+                        <label class = "cost-label">Cost: </label>
+                        <label class = "price-label">300</label>
+                        <img src = "img/diamant.png" class = "img-diamant costs">
+                        </div>
+                    </button>
+                    </div>
+                    <div class="dron-div">
+                        <div class = "desc-dron">
+                            <label class = "desc-dron-label">Сollect<br> the entire line <br>at once!</label>
+                        </div>
+                    <button class = "dron-button">
+                        <img src = "img/dron.png" class = "img-dron-cart">
+                        <div class = "total-price">
+                        <label class = "cost-label">Cost: </label>
+                        <label class = "price-label">300</label>
+                        <img src = "img/diamant.png" class = "img-diamant costs">
+                        </div>
+                    </button>
+                    </div>
+                    <din class = "tnt-div">
+                    <div class = "desc-tnt">
+                        <label class = "desc-tnt-label">KAABUUM!</label>
+                    </div>
+                    <button class = "tnt-button">
+                        <img src = "img/tnt.png" class = "img-tnt-cart">
+                        <div class = "total-price">
+                        <label class = "cost-label">Cost: </label>
+                        <label class = "price-label">300</label>
+                        <img src = "img/diamant.png" class = "img-diamant costs">
+                        </div>
+                    </button>
+                </div>
             </div>
-        </div>
-        <div class="row bottom-container">
-            <div class="col">
-                Bottom
             </div>
         </div>
     </div>
