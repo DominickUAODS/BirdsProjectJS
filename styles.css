@@ -485,18 +485,27 @@ margin-left: 20px;
 display: flex;
 flex-direction: row;
 justify-content: space-between;
-align-items: top;
+align-items: center;
+margin-left: 40px;
 }
 
 .left-container, .left-container-stat
 {
-display: flex;
 flex-direction: column;
 justify-content: space-between;
-align-items: top;
+align-items: center;
 border-radius: 20px;
 }
 
+.img-equipment-bird
+{
+    margin-right: 130px;
+}
+
+.left-container
+{
+    display: flex;
+}
 
 .equipment-label
 {
@@ -519,8 +528,24 @@ height:60px;
 display: flex;
 flex-direction: column;
 margin-bottom: 40px;
+margin-right: 80px;
 }
 
+.gif-birds-left-container img
+{
+    width: 100px;
+    height: 100px;
+
+}
+
+.gif-with-buttons-left
+{
+    display: flex;
+    justify-content: space-between;
+    flex-direction: row;
+    align-items: top;
+    margin-left: 20px;
+}
 /*Кнопки левого контейнера*/
 .equipment-items-div button
 {
@@ -546,6 +571,7 @@ margin-left: 15px;
 margin-top: 15px;
 }
 
+/*Statistic*/
 .left-container-stat
 {
 
