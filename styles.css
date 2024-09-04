@@ -1,69 +1,663 @@
-*
-{
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+body,
+html {
+	height: 100%;
+	margin: 0;
+	padding: 0;
 }
 
-body {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    font-family: Arial, sans-serif;
-    background-color: #f0f0f0;
+#preloader {
+	position: fixed;
+	/* фиксированное позиционирование, чтобы занимать весь экран */
+	z-index: 9999;
+	/* очень высокий z-index, чтобы перекрыть все остальные элементы */
+	top: 0;
+	left: 0;
+	width: 100%;
+	/* ширина 100% экрана */
+	height: 100%;
+	/* высота 100% экрана */
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	background: #ffffff;
+	/* цвет фона */
 }
 
-.container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 20px;
-    border: 1px solid #000;
-    width: 80%;
-    margin-top: 10px;
-    margin-bottom: 10px;
+#preloader.hide-preloader {
+	animation: hidePreloader 1s forwards;
+	/* скрытие прелоадера плавно */
 }
 
-textarea, input, button {
-    margin-top: 10px;
-    padding: 10px;
-    border: 1px solid #000;
-    width: 300px;
+#preloader.preloader-hidden {
+	display: none;
 }
 
-textarea {
-    height: 100px;
-    resize: none;
+@keyframes hidePreloader {
+	0% {
+		opacity: 1;
+	}
+
+	100% {
+		opacity: 0;
+	}
 }
 
-button {
-    cursor: pointer;
+.main-container {
+	background-color: black;
+	height: 100vh;
+	padding: 2%;
+	box-sizing: border-box;
+	display: flex;
+	flex-direction: column;
 }
 
-hr {
-    width: 100%;
-    border: 1px solid #000;
+.top-container {
+	height: 15%;
+	border: 1px solid white;
+	border-radius: 20px;
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
 }
 
-/* .correct {
-    color: green;
-    font-weight: bold;
-} */
-
-#inputContainer {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    width: 100%;
+.middle-container {
+	flex: 1;
+	display: flex;
+	margin: 2% 0;
 }
 
-.highlight{
-    color: red;
+.left-container,
+.right-container,
+.left-container-stat {
+	width: 20%;
+	border: 1px solid white;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	border-radius: 20px;
 }
 
-canvas {
-   height:  500px; 
-   width: 500px;
-   border: 1px solid;
+.right-container {
+	margin-left: 2%;
 }
-/* } 300 * 150 */
+
+.left-container,
+.left-container-stat {
+	margin-right: 2%;
+}
+
+.center-container {
+	flex: 2;
+	border: 1px solid white;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	margin: 0 2%;
+	border-radius: 20px;
+}
+
+/*Элементы верхнего контейнера*/
+.top-container-stop,
+.top-container-start,
+.top-container-statistic,
+.top-container-volume,
+.top-container-total-count,
+.top-container-current-level {
+	align-items: center;
+	justify-content: center;
+	display: inline-flex;
+
+}
+
+/*Верхняя надпись*/
+.label-top-container-total-count,
+.label-top-container-total-count-points,
+.label-top-container-current-level {
+	font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
+		Segoe UI, Roboto, Helvetica Neue, Arial, Noto Sans, sans-serif,
+		Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol, Noto Color Emoji;
+	font-size: 40px;
+	font-weight: 900;
+	line-height: 1.5;
+	color: #fff;
+
+}
+
+.top-container-total-count,
+.top-container-stop,
+.top-container-volume {
+	margin-right: 60px;
+}
+
+.label-top-container-total-count-points,
+.top-container-statistic {
+	margin-left: 40px;
+}
+
+/*Картинки верхний контейнер*/
+.img-bird-top {
+	width: 100px;
+	height: auto;
+}
+
+.img-diamant-top {
+	width: 30px;
+	height: 30px;
+	margin-left: 10px;
+}
+
+.top-container-total-count {
+	margin-left: 70px;
+}
+
+
+
+/*Общие стили для кнопок стоп и старт*/
+.btn-common,
+.btn-common *,
+.btn-common:after,
+.btn-common:before {
+	border: 0 solid;
+	box-sizing: border-box;
+}
+
+.btn-common {
+	-webkit-tap-highlight-color: transparent;
+	appearance: button;
+	background-color: #000;
+	background-image: none;
+	color: #fff;
+	cursor: pointer;
+	font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
+		Segoe UI, Roboto, Helvetica Neue, Arial, Noto Sans, sans-serif,
+		Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol, Noto Color Emoji;
+	font-size: 100%;
+	font-weight: 900;
+	line-height: 1.5;
+	margin: 0;
+	mask-image: radial-gradient(#000, #fff);
+	padding: 0;
+	text-transform: uppercase;
+}
+
+.btn-common:disabled {
+	cursor: default;
+}
+
+.btn-common:-moz-focusring {
+	outline: auto;
+}
+
+.btn-common svg {
+	display: block;
+}
+
+.btn-common [hidden] {
+	display: none;
+}
+
+.btn-common {
+	border-radius: 99rem;
+	border-width: 2px;
+	overflow: hidden;
+	padding: 0.8rem 3rem;
+	position: relative;
+}
+
+.btn-common span {
+	display: grid;
+	inset: 0;
+	place-items: center;
+	position: absolute;
+	transition: opacity 0.2s ease;
+}
+
+/* Кнопка старт */
+.btn-start .marquee {
+	--spacing: 5em;
+	--start: 0em;
+	--end: 5em;
+	animation: marquee-start 1s linear infinite;
+	animation-play-state: paused;
+	opacity: 0;
+	position: relative;
+	text-shadow: #fff var(--spacing) 0, #fff calc(var(--spacing) * -1) 0,
+		#fff calc(var(--spacing) * -2) 0;
+}
+
+.btn-start:hover .marquee {
+	animation-play-state: running;
+	opacity: 1;
+}
+
+.btn-start:hover .text {
+	opacity: 0;
+}
+
+@keyframes marquee-start {
+	0% {
+		transform: translateX(var(--start));
+	}
+
+	to {
+		transform: translateX(var(--end));
+	}
+}
+
+/* Кнопка стоп*/
+.btn-stop .marquee {
+	--spacing: 5em;
+	--start: 0em;
+	--end: 5em;
+	animation: marquee-stop 1s linear infinite;
+	animation-play-state: paused;
+	opacity: 0;
+	position: relative;
+	text-shadow: #fff var(--spacing) 0, #fff calc(var(--spacing) * -1) 0,
+		#fff calc(var(--spacing) * -2) 0;
+}
+
+.btn-stop:hover .marquee {
+	animation-play-state: running;
+	opacity: 1;
+}
+
+.btn-stop:hover .text-start-stop-btn {
+	opacity: 0;
+}
+
+@keyframes marquee-stop {
+	0% {
+		transform: translateX(var(--start));
+	}
+
+	to {
+		transform: translateX(var(--end));
+	}
+}
+
+/*Кнопка статистики*/
+.statistic-btn,
+.reset-btn {
+	width: 9em;
+	height: 3em;
+	border-radius: 30em;
+	font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
+		Segoe UI, Roboto, Helvetica Neue, Arial, Noto Sans, sans-serif,
+		Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol, Noto Color Emoji;
+	font-size: 100%;
+	font-weight: 900;
+	line-height: 1.5;
+	color: #fff;
+	border: none;
+	position: relative;
+	overflow: hidden;
+	z-index: 1;
+	box-shadow: 6px 6px 12px #c5c5c5,
+		-6px -6px 12px #ffffff;
+}
+
+.statistic-btn::before,
+.reset-btn::before {
+	content: '';
+	width: 0;
+	height: 3em;
+	border-radius: 30em;
+	position: absolute;
+	top: 0;
+	left: 0;
+	background-image: linear-gradient(to right, #59ca7d 0%, #f9f047 100%);
+	transition: .5s ease;
+	display: block;
+	z-index: -1;
+}
+
+.statistic-btn:hover::before,
+.reset-btn:hover::before {
+	width: 9em;
+}
+
+
+/*Кнопка звука*/
+.btn-volume {
+	width: 40px;
+	height: 40px;
+	border-radius: 100%;
+	background-color: rgb(71, 224, 230);
+	overflow: hidden;
+	position: relative;
+}
+
+.btn-volume-icon {
+	width: 100%;
+	height: 100%;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	transition: all 0.5s ease;
+	overflow: hidden;
+	position: relative;
+}
+
+.btn-volume-input {
+	position: absolute;
+	inset: 0;
+	opacity: 0;
+	cursor: pointer;
+	z-index: 999;
+}
+
+.btn-volume-icon:before {
+	content: "";
+	display: flex;
+	width: 0px;
+	height: 0px;
+	border-radius: 100%;
+	transition: all 0.2s ease;
+	position: absolute;
+	left: 50%;
+	top: 50%;
+	transform: translate(-50%, -50%);
+	background-color: rgb(32, 33, 36);
+}
+
+.btn-volume-input:checked+.btn-volume-icon:before {
+	width: calc(100% + 4px);
+	height: calc(100% + 4px);
+}
+
+.btn-volume-svg {
+	z-index: 2;
+	color: rgb(32, 33, 36);
+	height: 30px;
+	width: 30px;
+}
+
+.btn-volume-input:checked+.btn-volume-icon svg {
+	color: rgb(255, 255, 255);
+}
+
+#volume-slider {
+	width: 100px;
+	margin-left: 10px;
+}
+
+/*Правый контейнер*/
+
+.img-upgrade-cart {
+	width: 50px;
+	height: 50px;
+	margin-left: 20px;
+}
+
+.upgrade-div {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	align-items: top;
+}
+
+.right-container {
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+	align-items: top;
+	border-radius: 20px;
+
+}
+
+
+
+.upgrade-label {
+	font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
+		Segoe UI, Roboto, Helvetica Neue, Arial, Noto Sans, sans-serif,
+		Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol, Noto Color Emoji;
+	font-size: 36px;
+	font-weight: 900;
+	color: white;
+}
+
+.img-sling-cart,
+.img-dron-cart,
+.img-tnt-cart {
+	width: 60px;
+	height: 60px;
+}
+
+.upgrade-items-div {
+	display: flex;
+	flex-direction: column;
+	margin-bottom: 40px;
+}
+
+/*Кнопки правого контейнера*/
+.upgrade-items-div button {
+	border: 1px solid white;
+	background-color: #000;
+	border-radius: 20px;
+	width: 110px;
+	height: 110px;
+	font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
+		Segoe UI, Roboto, Helvetica Neue, Arial, Noto Sans, sans-serif,
+		Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol, Noto Color Emoji;
+	font-size: 15px;
+	font-weight: 900;
+	color: white;
+	margin-top: 15px;
+	margin-left: 15px;
+
+
+}
+
+.total-price {
+	margin-top: 15px;
+}
+
+
+.dron-div,
+.tnt-div,
+.sling-div {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
+		Segoe UI, Roboto, Helvetica Neue, Arial, Noto Sans, sans-serif,
+		Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol, Noto Color Emoji;
+	font-size: 20px;
+	font-weight: 900;
+	color: white;
+
+	align-items: center;
+
+}
+
+/*Описания элементов*/
+
+.desc-dron {
+	display: flex;
+	text-align: center;
+	animation: color-change 0.7s infinite;
+
+}
+
+.desc-tnt-label {
+	padding-left: 15px;
+	animation: color-change 0.7s infinite;
+}
+
+.desc-sling-label {
+	padding-left: 55px;
+	animation: color-change 0.7s infinite;
+}
+
+@keyframes color-change {
+	0% {
+		color: rgb(61, 132, 230);
+	}
+
+	50% {
+		color: rgb(248, 90, 90);
+	}
+
+	100% {
+		color: rgb(61, 132, 230);
+	}
+}
+
+/*Левый контейнер*/
+.img-equipment-bird {
+	width: 80px;
+	height: 80px;
+	margin-left: 20px;
+}
+
+.equipment-div {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	align-items: center;
+	margin-left: 40px;
+}
+
+.left-container,
+.left-container-stat {
+	flex-direction: column;
+	justify-content: space-between;
+	align-items: center;
+	border-radius: 20px;
+}
+
+.img-equipment-bird {
+	margin-right: 130px;
+}
+
+.left-container {
+	display: flex;
+}
+
+.equipment-label {
+	font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
+		Segoe UI, Roboto, Helvetica Neue, Arial, Noto Sans, sans-serif,
+		Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol, Noto Color Emoji;
+	font-size: 36px;
+	font-weight: 900;
+	color: white;
+}
+
+.img-sling-eq,
+.img-dron-eq,
+.img-tnt-eq {
+	width: 60px;
+	height: 60px;
+}
+
+.equipment-items-div {
+	display: flex;
+	flex-direction: column;
+	margin-bottom: 40px;
+	margin-right: 80px;
+}
+
+.gif-birds-left-container img {
+	width: 100px;
+	height: 100px;
+
+}
+
+.gif-with-buttons-left {
+	display: flex;
+	justify-content: space-between;
+	flex-direction: row;
+	align-items: top;
+	margin-left: 20px;
+}
+
+/*Кнопки левого контейнера*/
+.equipment-items-div button {
+	border: 1px solid white;
+	background-color: #000;
+	border-radius: 20px;
+	width: 110px;
+	height: 110px;
+	font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
+		Segoe UI, Roboto, Helvetica Neue, Arial, Noto Sans, sans-serif,
+		Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol, Noto Color Emoji;
+	font-size: 15px;
+	font-weight: 900;
+	color: white;
+	margin-top: 15px;
+	margin-left: 15px;
+
+
+}
+
+.dron-eq-have,
+.tnt-eq-have,
+.sling-eq-have {
+	margin-top: 15px;
+}
+
+/*Statistic*/
+.left-container-stat {
+	/* height: 69.7%; */
+	height: 100%;
+	width: 22.5%;
+}
+
+.left-container {
+	display: none;
+}
+
+/*Центральный контейнер*/
+.center-container {
+	display: flex;
+	justify-content: space-between;
+	align-items: top;
+	flex-direction: column;
+}
+
+.first-row,
+.second-row,
+.third-row {
+	height: 100%;
+	width: 100%;
+	overflow: hidden;
+	position: relative;
+}
+
+.image img {
+	width: 70px;
+	height: 70px;
+}
+
+.image {
+	position: absolute;
+	top: 50%;
+	transform: translateY(-50%);
+	width: 70px;
+	height: 70px;
+	animation: move linear forwards;
+}
+
+.number {
+	position: absolute;
+	top: -20px;
+	/* Позиция цифры над изображением */
+	left: 50%;
+	transform: translateX(-50%);
+	font-size: 12px;
+	font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
+		Segoe UI, Roboto, Helvetica Neue, Arial, Noto Sans, sans-serif,
+		Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol, Noto Color Emoji;
+	color: white;
+}
+
+@keyframes move {
+	0% {
+		left: 0;
+	}
+
+	100% {
+		left: 100%;
+	}
+}
