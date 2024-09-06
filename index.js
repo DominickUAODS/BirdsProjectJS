@@ -1,5 +1,6 @@
 import { startSpawning, stopSpawning } from "./birdManager.js";
 import { toggleContainers, initializePreloader, bindUpgradeButtons } from "./uiManager.js";
+import { updateUpgradeCosts } from "./upgrades.js"
 
 document.getElementById("statistic-btn").addEventListener("click", toggleContainers);
 window.onload = initializePreloader;
@@ -11,7 +12,45 @@ document.addEventListener("DOMContentLoaded", () => {
 	startButton.addEventListener("click", startSpawning);
 	stopButton.addEventListener("click", stopSpawning);
 
+	if (!localStorage.getItem("startTime")) {
+        const startTime = new Date().toISOString();
+        localStorage.setItem("startTime", startTime);
+    }
+
+	// Current level + point
+	const currentLevel = localStorage.getItem("currentLevel") || "1";
+	const totalPoints = localStorage.getItem("totalPoints") || "0";
+
+	const levelElement = document.getElementById("current-level");
+	if (levelElement) {
+		levelElement.textContent = `${currentLevel}`;
+	}
+
+	const pointsElement = document.querySelector(".label-top-container-total-count-points");
+	if (pointsElement) {
+		pointsElement.textContent = `${totalPoints}`;
+	}
+
+	let sessionStartTime = Date.now();
+
+	startButton.addEventListener("click", () => {
+        sessionStartTime = Date.now();
+    });
+
+    stopButton.addEventListener("click", () => {
+        const sessionEndTime = Date.now();
+        const sessionDuration = sessionEndTime - sessionStartTime;
+
+        let totalTimePlayed = parseInt(localStorage.getItem("totalTimePlayed") || "0", 10);
+        totalTimePlayed += sessionDuration;
+        localStorage.setItem("totalTimePlayed", totalTimePlayed);
+
+        updateStats();
+    });
+
+	updateUpgradeCosts(currentLevel);
 	bindUpgradeButtons();
+	updateStats();
 
 	// Audio
 	const muteToggle = document.getElementById("mute-toggle");

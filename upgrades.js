@@ -10,7 +10,7 @@ function updateUpgradeCount(item, count) {
 }
 
 export function calculateUpgradeCost(baseCost, level) {
-	let upgradeCost = baseCost * Math.pow(1.3, level - 1);
+	let upgradeCost = baseCost * Math.pow(3.5, level - 1);
     return Math.ceil(upgradeCost);
 }
 
@@ -30,6 +30,12 @@ export function purchaseUpgrade(item, baseCost, labelHave, labelMessage) {
 		updateTotalPoints(-calculatedCost);
 		updateLabel(labelHave, currentCount);
 
+		let totalPurchases = parseInt(localStorage.getItem("totalPurchases") || "0", 10);
+        totalPurchases++;
+        localStorage.setItem("totalPurchases", totalPurchases);
+
+        updateStats();
+
 		// new
 		if (item === "sling") {
 			incrementClickPoints();
@@ -39,7 +45,8 @@ export function purchaseUpgrade(item, baseCost, labelHave, labelMessage) {
 			removeAllBirdsFromScreen();
 		}
 	} else {
-		displayMessage(labelMessage, "KeepPlaying");
+		const originalMessage = labelMessage.textContent;
+		displayMessage(labelMessage, "Keep Playing", originalMessage);
 	}
 }
 
@@ -135,10 +142,10 @@ function adjustBirdPointsRange(level) {
 }
 
 
-function updateUpgradeCosts(level) {
-    const baseSlingCost = 150;
-    const baseDroneCost = 200;
-    const baseTntCost = 300;
+export function updateUpgradeCosts(level) {
+    const baseSlingCost = 750;
+    const baseDroneCost = 1000;
+    const baseTntCost = 1500;
 
     const slingCost = calculateUpgradeCost(baseSlingCost, level);
     const droneCost = calculateUpgradeCost(baseDroneCost, level);

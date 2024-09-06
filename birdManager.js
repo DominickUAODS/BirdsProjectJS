@@ -73,13 +73,17 @@ function createImageElement(row, delay, speed, src) {
 
 	});
 
-	row.appendChild(imgWrapper);
-
 	imgWrapper.addEventListener('animationend', () => {
 		if (imgWrapper.parentNode) {
 			row.removeChild(imgWrapper);
+
+			let missedPoints = parseInt(localStorage.getItem("missedPoints") || "0", 10);
+			missedPoints += parseInt(imgWrapper.dataset.points, 10);
+			localStorage.setItem("missedPoints", missedPoints);
 		}
 	});
+
+	row.appendChild(imgWrapper);
 }
 
 function spawnBirds() {

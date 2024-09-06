@@ -403,9 +403,7 @@ html {
 	justify-content: space-between;
 	align-items: top;
 	border-radius: 20px;
-
 }
-
 
 
 .upgrade-label {
@@ -435,7 +433,7 @@ html {
 	border: 1px solid white;
 	background-color: #000;
 	border-radius: 20px;
-	width: 110px;
+	width: 135px;
 	height: 110px;
 	font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
 		Segoe UI, Roboto, Helvetica Neue, Arial, Noto Sans, sans-serif,
