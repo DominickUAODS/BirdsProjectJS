@@ -1,7 +1,8 @@
 import { purchaseUpgrade } from "./upgrades.js";
-import { resetAllData } from "./points.js";
+import { resetAllData, updateStats } from "./points.js";
 
 export function toggleContainers() {
+	updateStats();
 	const leftContainer = document.querySelector(".left-container");
 	const leftContainerStat = document.querySelector(".left-container-stat");
 

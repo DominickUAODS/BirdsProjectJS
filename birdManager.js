@@ -1,5 +1,5 @@
 import { getRandomRow, getRandomSpeed, getRandomDelay } from './utils.js';
-import { getTotalPoints, updateTotalPoints } from './points.js';
+import { getTotalPoints, updateTotalPoints, updateAllPoints, updateStats } from './points.js';
 import { getClickPoints } from './upgrades.js'
 
 let isRunning = false;
@@ -29,7 +29,7 @@ function createImageElement(row, delay, speed, src) {
 	img.style.width = '100%';
 	img.style.height = '100%';
 
-	let randomNumber = Math.floor(Math.random() * 40) + 1;
+	let randomNumber = Math.floor(Math.random() * window.birdPointsRange) + 1;
 	imgWrapper.dataset.points = randomNumber;
 
 	const numberLabel = document.createElement('div');
@@ -50,7 +50,7 @@ function createImageElement(row, delay, speed, src) {
 		clickSound.play();
 
 		let points = parseInt(imgWrapper.dataset.points, 10);
-		//points--;
+
 		if (points < getPoints) {
 			getPoints = points;
 		}
@@ -67,9 +67,10 @@ function createImageElement(row, delay, speed, src) {
 		let totalPoints = getTotalPoints();
 		//totalPoints++;
 		totalPoints += getPoints;
-		updateTotalPoints(getPoints); // Update total points
+		updateTotalPoints(getPoints);	// Update total points
+		updateAllPoints(getPoints);		// Update all points
+		updateStats();
 		document.querySelector('.label-top-container-total-count-points').textContent = totalPoints;
-
 
 	});
 

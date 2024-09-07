@@ -1,4 +1,4 @@
-import { getTotalPoints, updateTotalPoints, canAfford } from "./points.js";
+import { updateTotalPoints, canAfford } from "./points.js";
 import { updateLabel, displayMessage, updateLevel,  } from "./uiManager.js";
 
 function getUpgradeCount(item) {
@@ -102,7 +102,6 @@ export function loadUpgradeCounts() {
 	return { slingCount, dronCount, tntCount };
 }
 
-
 function checkAndUpdateLevel() {
 	let level = parseInt(localStorage.getItem("currentLevel") || "1", 10);
 	let totalPoints = parseInt(localStorage.getItem("totalPoints") || "0", 10);
@@ -135,21 +134,21 @@ function checkAndUpdateLevel() {
 	updateUpgradeCosts(level);
 }
 
-function adjustBirdPointsRange(level) {
+export function adjustBirdPointsRange(level) {
 	let basePoints = 40;
-	let rangeFactor = level * 2;
-	window.birdPointsRange = basePoints * rangeFactor;
+	//let rangeFactor = level * 2;
+	let rangeFactor = Math.pow(1.5, level - 1);
+	window.birdPointsRange = basePoints + basePoints * Math.ceil(rangeFactor);
 }
-
 
 export function updateUpgradeCosts(level) {
     const baseSlingCost = 750;
     const baseDroneCost = 1000;
-    const baseTntCost = 1500;
+    const baseTntCost   = 1500;
 
     const slingCost = calculateUpgradeCost(baseSlingCost, level);
     const droneCost = calculateUpgradeCost(baseDroneCost, level);
-    const tntCost = calculateUpgradeCost(baseTntCost, level);
+    const tntCost   = calculateUpgradeCost(baseTntCost, level);
 
     document.querySelector('.sling-button .price-label').textContent = slingCost;
     document.querySelector('.dron-button .price-label').textContent = droneCost;
