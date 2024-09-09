@@ -417,7 +417,8 @@ html {
 
 .img-sling-cart,
 .img-dron-cart,
-.img-tnt-cart {
+.img-tnt-cart,
+.img-auto-cart {
 	width: 60px;
 	height: 60px;
 }
@@ -454,7 +455,8 @@ html {
 
 .dron-div,
 .tnt-div,
-.sling-div {
+.sling-div,
+.auto-div {
 	display: flex;
 	flex-direction: row;
 	justify-content: space-between;
@@ -464,18 +466,15 @@ html {
 	font-size: 20px;
 	font-weight: 900;
 	color: white;
-
 	align-items: center;
-
 }
 
 /*Описания элементов*/
 
-.desc-dron {
+.desc-dron-label {
 	display: flex;
 	text-align: center;
 	animation: color-change 0.7s infinite;
-
 }
 
 .desc-tnt-label {
@@ -485,6 +484,13 @@ html {
 
 .desc-sling-label {
 	padding-left: 55px;
+	animation: color-change 0.7s infinite;
+}
+
+.desc-auto-label {
+	/* display: flex; */
+	text-align: center;
+	padding-left: 35px;
 	animation: color-change 0.7s infinite;
 }
 
@@ -544,7 +550,8 @@ html {
 
 .img-sling-eq,
 .img-dron-eq,
-.img-tnt-eq {
+.img-tnt-eq,
+.img-auto-eq {
 	width: 60px;
 	height: 60px;
 }
@@ -591,7 +598,8 @@ html {
 
 .dron-eq-have,
 .tnt-eq-have,
-.sling-eq-have {
+.sling-eq-have,
+.auto-eq-have {
 	margin-top: 15px;
 }
 
