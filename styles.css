@@ -7,25 +7,25 @@ html {
 
 #preloader {
 	position: fixed;
-	/* фиксированное позиционирование, чтобы занимать весь экран */
 	z-index: 9999;
-	/* очень высокий z-index, чтобы перекрыть все остальные элементы */
 	top: 0;
 	left: 0;
 	width: 100%;
-	/* ширина 100% экрана */
 	height: 100%;
-	/* высота 100% экрана */
 	display: flex;
 	align-items: center;
 	justify-content: center;
-	background: #ffffff;
-	/* цвет фона */
+	background: black;
+}
+
+#preloader img
+{
+	width: auto;
+	height: 200px;
 }
 
 #preloader.hide-preloader {
 	animation: hidePreloader 1s forwards;
-	/* скрытие прелоадера плавно */
 }
 
 #preloader.preloader-hidden {
@@ -318,6 +318,14 @@ html {
 }
 
 
+.reset-btn {
+    background-color: #000; 
+	margin-top:50px;
+
+}
+
+
+
 /*Кнопка звука*/
 .btn-volume {
 	width: 40px;
@@ -426,7 +434,6 @@ html {
 .upgrade-items-div {
 	display: flex;
 	flex-direction: column;
-	margin-bottom: 40px;
 }
 
 /*Кнопки правого контейнера*/
@@ -442,7 +449,7 @@ html {
 	font-size: 15px;
 	font-weight: 900;
 	color: white;
-	margin-top: 15px;
+	margin-top: 10px;
 	margin-left: 15px;
 
 
@@ -469,6 +476,10 @@ html {
 	align-items: center;
 }
 
+.auto-div
+{
+margin-bottom: 10px;
+} 
 /*Описания элементов*/
 
 .desc-dron-label {
@@ -558,9 +569,12 @@ html {
 
 .equipment-items-div {
 	display: flex;
-	flex-direction: column;
-	margin-bottom: 40px;
-	margin-right: 80px;
+    justify-content: center; 
+    align-items: center; 
+    flex-wrap: wrap; 
+    width: 300px; 
+    height: 300px; 
+    border: 1px solid black;
 }
 
 .gif-birds-left-container img {
@@ -574,7 +588,6 @@ html {
 	justify-content: space-between;
 	flex-direction: row;
 	align-items: top;
-	margin-left: 20px;
 }
 
 /*Кнопки левого контейнера*/
@@ -614,6 +627,19 @@ html {
 	display: none;
 }
 
+.stats {
+	font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
+		Segoe UI, Roboto, Helvetica Neue, Arial, Noto Sans, sans-serif,
+		Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol, Noto Color Emoji;
+	color: white;
+}
+
+.stats h2
+{
+	font-weight: 900;
+	margin-top: 5px;
+
+}
 /*Центральный контейнер*/
 .center-container {
 	display: flex;
