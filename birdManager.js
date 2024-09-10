@@ -91,7 +91,7 @@ function spawnBirds() {
 	if (!isRunning) return;
 	const row = getRandomRow();
 	if (row.querySelectorAll('.image').length < 10) {
-		createImageElement(row, getRandomDelay(), getRandomSpeed(), 'img/flying-fly.gif');
+		createImageElement(row, getRandomDelay(), getRandomSpeed(), 'img/bird-gif-main.gif');
 	}
 }
 
