@@ -2,19 +2,19 @@ import { getRandomRow, getRandomSpeed, getRandomDelay } from './utils.js';
 import { getTotalPoints, updateTotalPoints, updateAllPoints, updateStats } from './points.js';
 import { getClickPoints } from './upgrades.js'
 
-let isRunning = false;
+window.isRunning = false;
 let spawnIntervalId;
 
 export function startSpawning() {
-	if (!isRunning) {
-		isRunning = true;
+	if (!window.isRunning) {
+		window.isRunning = true;
 		spawnBirds();
 		spawnIntervalId = setInterval(spawnBirds, getRandomDelay());
 	}
 }
 
 export function stopSpawning() {
-	isRunning = false;
+	window.isRunning = false;
 	clearInterval(spawnIntervalId);
 	removeAllBirds();
 }
@@ -43,36 +43,39 @@ function createImageElement(row, delay, speed, src) {
 	imgWrapper.appendChild(img);
 	imgWrapper.appendChild(numberLabel);
 
-	imgWrapper.addEventListener('click', function () {
-		let getPoints = getClickPoints();
-		// audio
-		const clickSound = document.getElementById('click-sound');
-		clickSound.play();
+	if (!window.isRowSelectionActive) {
+		imgWrapper.addEventListener('click', function () {
 
-		let points = parseInt(imgWrapper.dataset.points, 10);
+			let getPoints = getClickPoints();
+			// audio
+			const clickSound = document.getElementById('click-sound');
+			clickSound.play();
 
-		if (points < getPoints) {
-			getPoints = points;
-		}
+			let points = parseInt(imgWrapper.dataset.points, 10);
 
-		points -= getPoints;
+			if (points < getPoints) {
+				getPoints = points;
+			}
 
-		if (points <= 0) {
-			row.removeChild(imgWrapper);
-		} else {
-			imgWrapper.dataset.points = points;
-			numberLabel.textContent = points;
-		}
+			points -= getPoints;
 
-		let totalPoints = getTotalPoints();
-		//totalPoints++;
-		totalPoints += getPoints;
-		updateTotalPoints(getPoints);	// Update total points
-		updateAllPoints(getPoints);		// Update all points
-		updateStats();
-		document.querySelector('.label-top-container-total-count-points').textContent = totalPoints;
+			if (points <= 0) {
+				row.removeChild(imgWrapper);
+			} else {
+				imgWrapper.dataset.points = points;
+				numberLabel.textContent = points;
+			}
 
-	});
+			let totalPoints = getTotalPoints();
+			//totalPoints++;
+			totalPoints += getPoints;
+			updateTotalPoints(getPoints);	// Update total points
+			updateAllPoints(getPoints);		// Update all points
+			updateStats();
+			document.querySelector('.label-top-container-total-count-points').textContent = totalPoints;
+
+		})
+	};
 
 	imgWrapper.addEventListener('animationend', () => {
 		if (imgWrapper.parentNode) {
@@ -88,7 +91,7 @@ function createImageElement(row, delay, speed, src) {
 }
 
 function spawnBirds() {
-	if (!isRunning) return;
+	if (!window.isRunning) return;
 	const row = getRandomRow();
 	if (row.querySelectorAll('.image').length < 10) {
 		createImageElement(row, getRandomDelay(), getRandomSpeed(), 'img/bird-gif-main.gif');
@@ -102,3 +105,31 @@ function removeAllBirds() {
 		birds.forEach(bird => row.removeChild(bird));
 	});
 }
+
+document.querySelectorAll(".image").forEach(bird => {
+	bird.addEventListener("click", function () {
+		const row = bird.closest('.row-class');
+
+		if (!window.isRowSelectionActive && !row) {
+			let points = parseInt(bird.dataset.points, 10);
+			let getPoints = getClickPoints();
+
+			const clickSound = document.getElementById('click-sound');
+			clickSound.play();
+			
+			points -= getPoints;
+
+			if (points <= 0) {
+				bird.remove(); 
+			} else {
+				bird.dataset.points = points;
+			}
+
+			let totalPoints = getTotalPoints();
+			totalPoints += getPoints;
+			updateTotalPoints(getPoints);
+			updateAllPoints(getPoints);
+			updateStats();
+		}
+	});
+});

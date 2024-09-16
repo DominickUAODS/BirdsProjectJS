@@ -1,4 +1,4 @@
-import { updateTotalPoints, canAfford, updateStats } from "./points.js";
+import { updateTotalPoints, canAfford, updateStats, getTotalPoints, updateAllPoints } from "./points.js";
 import { updateLabel, displayMessage, updateLevel } from "./uiManager.js";
 
 function getUpgradeCount(item) {
@@ -15,42 +15,47 @@ export function calculateUpgradeCost(baseCost, level) {
 }
 
 export function purchaseUpgrade(item, baseCost, labelHave, labelMessage) {
-	checkAndUpdateLevel();
+	if (window.isRunning === true) {
+		checkAndUpdateLevel();
 
-	const currentLevel = parseInt(localStorage.getItem("currentLevel") || "1", 10);
-	const calculatedCost = calculateUpgradeCost(baseCost, currentLevel);
+		const currentLevel = parseInt(localStorage.getItem("currentLevel") || "1", 10);
+		const calculatedCost = calculateUpgradeCost(baseCost, currentLevel);
 
-	if (canAfford(calculatedCost)) {
-		//audio
-		const upgradeSound = document.getElementById("upgrade-sound");
-		upgradeSound.play();
+		if (canAfford(calculatedCost)) {
+			//audio
+			const upgradeSound = document.getElementById("upgrade-sound");
+			upgradeSound.play();
 
-		const currentCount = getUpgradeCount(item) + 1;
-		updateUpgradeCount(item, currentCount);
-		updateTotalPoints(-calculatedCost);
-		updateLabel(labelHave, currentCount);
+			const currentCount = getUpgradeCount(item) + 1;
+			updateUpgradeCount(item, currentCount);
+			updateTotalPoints(-calculatedCost);
+			updateLabel(labelHave, currentCount);
 
-		let totalPurchases = parseInt(localStorage.getItem("totalPurchases") || "0", 10);
-		totalPurchases++;
-		localStorage.setItem("totalPurchases", totalPurchases);
+			let totalUpgrades = parseInt(localStorage.getItem("totalUpgrades") || "0", 10);
+			totalUpgrades++;
+			localStorage.setItem("totalUpgrades", totalUpgrades);
 
-		updateStats();
+			updateStats();
 
-		// new
-		if (item === "sling") {
-			incrementClickPoints();
-		} else if (item === "drone") {
-			removeAllBirdsFromRow(row);
-		} else if (item === "tnt") {
-			removeAllBirdsFromScreen();
-		} else if (item === "autoclicker") {
-			let autoClickerCount = getUpgradeCount("autoclicker") + 1;
-			updateUpgradeCount("autoclicker", autoClickerCount)
-			startAutoClicker(autoClickerCount, currentLevel);
+
+			// new
+			if (item === "sling") {
+				incrementClickPoints();
+			} else if (item === "drone") {
+				//removeAllBirdsFromRow(row);
+				//activateRowSelection();
+				activateDroneMode();
+			} else if (item === "tnt") {
+				removeAllBirdsFromScreen();
+			} else if (item === "autoclicker") {
+				let autoClickerCount = getUpgradeCount("autoclicker") + 1;
+				updateUpgradeCount("autoclicker", autoClickerCount)
+				startAutoClicker(autoClickerCount, currentLevel);
+			}
+		} else {
+			const originalMessage = labelMessage.textContent;
+			displayMessage(labelMessage, "Keep Playing", originalMessage);
 		}
-	} else {
-		const originalMessage = labelMessage.textContent;
-		displayMessage(labelMessage, "Keep Playing", originalMessage);
 	}
 }
 
@@ -60,7 +65,7 @@ let autoClickerInterval;
 
 export function startAutoClicker(clickerCount, level) {
 	const clicksPerSecond = clickerCount * level;
-	const interval = 1000 / clicksPerSecond;
+	const interval = 5000 / clicksPerSecond;
 
 	clearInterval(autoClickerInterval);
 
@@ -78,16 +83,19 @@ function autoClickAllRows() {
 			const getPoints = getClickPoints();
 
 			points -= getPoints;
+
 			if (points <= 0) {
 				row.removeChild(bird);
 			} else {
 				bird.dataset.points = points;
+				const numberLabel = bird.querySelector("div");
+				numberLabel.textContent = points;
 			}
 
 			let totalPoints = getTotalPoints();
 			totalPoints += getPoints;
-			updateTotalPoints(getPoints);	// Update total points
-			updateAllPoints(getPoints);		// Update all points
+			updateTotalPoints(getPoints);
+			updateAllPoints(getPoints);
 			updateStats();
 
 			document.querySelector(".label-top-container-total-count-points").textContent = totalPoints;
@@ -104,36 +112,77 @@ export function getClickPoints() {
 	return clickPoints;
 }
 
+function activateDroneMode() {
+	const rows = document.querySelectorAll(".first-row, .second-row, .third-row");
+
+	rows.forEach(row => {
+		row.classList.add("row-class");
+	});
+
+	activateRowSelection(); 
+}
+
+function deactivateDroneMode() {
+	const rows = document.querySelectorAll(".first-row, .second-row, .third-row");
+
+	rows.forEach(row => {
+		row.classList.remove("row-class");
+	});
+	
+	deactivateRowSelection(); 
+}
+
+function activateRowSelection() {
+	window.isRowSelectionActive = true;
+	document.querySelectorAll(".row-class").forEach(row => {
+		row.classList.add("selectable-row");
+		row.addEventListener("click", handleRowClick);
+	});
+}
+
+function handleRowClick(event) {
+	if (window.isRowSelectionActive) {
+		const row = event.currentTarget;
+		removeAllBirdsFromRow(row);
+		//deactivateRowSelection();
+		deactivateDroneMode();
+	}
+}
+
+function deactivateRowSelection() {
+	window.isRowSelectionActive = false;
+	document.querySelectorAll(".selectable-row").forEach(row => {
+		row.classList.remove("selectable-row");
+		row.removeEventListener("click", handleRowClick);
+	});
+}
+
 function removeAllBirdsFromRow(row) {
 	const birds = row.querySelectorAll(".image");
 	birds.forEach(bird => {
 		row.removeChild(bird);
-		incrementTotalPoints(parseInt(bird.dataset.points));
+		incrementTotalAllPoints(parseInt(bird.dataset.points));
 	});
 }
 
-document.querySelectorAll(".row-class").forEach(row => {
-	row.addEventListener("click", function () {
-		removeAllBirdsFromRow(row);
-	});
-});
-
 function removeAllBirdsFromScreen() {
-	//const rows = [firstRow, secondRow, thirdRow];
-	const row = [document.querySelector(".first-row"), document.querySelector(".second-row"), document.querySelector(".third-row")];
+	const rows = [document.querySelector(".first-row"), document.querySelector(".second-row"), document.querySelector(".third-row")];
 	rows.forEach(row => {
 		const birds = row.querySelectorAll(".image");
 		birds.forEach(bird => {
 			row.removeChild(bird);
-			incrementTotalPoints(parseInt(bird.dataset.points));
+			incrementTotalAllPoints(parseInt(bird.dataset.points));
 		});
 	});
 }
 
-function incrementTotalPoints(points) {
+function incrementTotalAllPoints(points) {
 	let totalPoints = parseInt(localStorage.getItem("totalPoints") || "0", 10);
 	totalPoints += points;
 	localStorage.setItem("totalPoints", totalPoints);
+	let allPoints = parseInt(localStorage.getItem("allPoints") || "0", 10);
+	allPoints += points;
+	localStorage.setItem("allPoints", allPoints);
 	const totalPointsLabel = document.querySelector(".label-top-container-total-count-points");
 	totalPointsLabel.textContent = totalPoints;
 }
@@ -149,28 +198,28 @@ export function loadUpgradeCounts() {
 
 function checkAndUpdateLevel() {
 	let level = parseInt(localStorage.getItem("currentLevel") || "1", 10);
-	let totalPoints = parseInt(localStorage.getItem("totalPoints") || "0", 10);
+	let allPoints = parseInt(localStorage.getItem("allPoints") || "0", 10);
 	let totalUpgrades = parseInt(localStorage.getItem("totalUpgrades") || "0", 10);
 
-	if (level === 1 && (totalPoints >= 1000 || totalUpgrades >= 10)) {
+	if (level === 1 && (allPoints >= 1000 || totalUpgrades >= 10)) {
 		level = 2;
-	} else if (level === 2 && (totalPoints >= 10_000 || totalUpgrades >= 30)) {
+	} else if (level === 2 && (allPoints >= 10_000 || totalUpgrades >= 30)) {
 		level = 3;
-	} else if (level === 3 && (totalPoints >= 100_000 || totalUpgrades >= 80)) {
+	} else if (level === 3 && (allPoints >= 100_000 || totalUpgrades >= 80)) {
 		level = 4;
-	} else if (level === 4 && (totalPoints >= 500_000 || totalUpgrades >= 170)) {
+	} else if (level === 4 && (allPoints >= 500_000 || totalUpgrades >= 170)) {
 		level = 5;
-	} else if (level === 5 && (totalPoints >= 1_000_000 || totalUpgrades >= 310)) {
+	} else if (level === 5 && (allPoints >= 1_000_000 || totalUpgrades >= 310)) {
 		level = 6;
-	} else if (level === 6 && (totalPoints >= 5_000_000 || totalUpgrades >= 480)) {
+	} else if (level === 6 && (allPoints >= 5_000_000 || totalUpgrades >= 480)) {
 		level = 7;
-	} else if (level === 7 && (totalPoints >= 10_000_000 || totalUpgrades >= 790)) {
+	} else if (level === 7 && (allPoints >= 10_000_000 || totalUpgrades >= 790)) {
 		level = 8;
-	} else if (level === 8 && (totalPoints >= 50_000_000 || totalUpgrades >= 1_270)) {
+	} else if (level === 8 && (allPoints >= 50_000_000 || totalUpgrades >= 1_270)) {
 		level = 9;
-	} else if (level === 9 && (totalPoints >= 100_000_000 || totalUpgrades >= 2_060)) {
+	} else if (level === 9 && (allPoints >= 100_000_000 || totalUpgrades >= 2_060)) {
 		level = 10;
-	} else if (level === 10 && (totalPoints >= 500_000_000 || totalUpgrades >= 3_330)) {
+	} else if (level === 10 && (allPoints >= 500_000_000 || totalUpgrades >= 3_330)) {
 		alert("Contact developers to add new levels")
 	}
 
@@ -187,10 +236,10 @@ export function adjustBirdPointsRange(level) {
 }
 
 export function updateUpgradeCosts(level) {
-	const baseSlingCost = 750;
-	const baseDroneCost = 1000;
-	const baseTntCost = 1500;
-	const baseAutoclickerCost = 2000;
+	const baseSlingCost = 150;
+	const baseDroneCost = 200;
+	const baseTntCost = 300;
+	const baseAutoclickerCost = 500;
 
 	const slingCost = calculateUpgradeCost(baseSlingCost, level);
 	const droneCost = calculateUpgradeCost(baseDroneCost, level);

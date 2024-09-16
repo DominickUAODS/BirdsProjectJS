@@ -18,8 +18,7 @@ html {
 	background: black;
 }
 
-#preloader img
-{
+#preloader img {
 	width: auto;
 	height: 200px;
 }
@@ -106,7 +105,6 @@ html {
 	align-items: center;
 	justify-content: center;
 	display: inline-flex;
-
 }
 
 /*Верхняя надпись*/
@@ -120,7 +118,6 @@ html {
 	font-weight: 900;
 	line-height: 1.5;
 	color: #fff;
-
 }
 
 .top-container-total-count,
@@ -149,7 +146,6 @@ html {
 .top-container-total-count {
 	margin-left: 70px;
 }
-
 
 
 /*Общие стили для кнопок стоп и старт*/
@@ -317,13 +313,10 @@ html {
 	width: 9em;
 }
 
-
 .reset-btn {
-    background-color: #000; 
-	margin-top:50px;
-
+	background-color: #000;
+	margin-top: 50px;
 }
-
 
 
 /*Кнопка звука*/
@@ -451,8 +444,6 @@ html {
 	color: white;
 	margin-top: 10px;
 	margin-left: 15px;
-
-
 }
 
 .total-price {
@@ -476,10 +467,10 @@ html {
 	align-items: center;
 }
 
-.auto-div
-{
-margin-bottom: 10px;
-} 
+.auto-div {
+	margin-bottom: 10px;
+}
+
 /*Описания элементов*/
 
 .desc-dron-label {
@@ -569,12 +560,12 @@ margin-bottom: 10px;
 
 .equipment-items-div {
 	display: flex;
-    justify-content: center; 
-    align-items: center; 
-    flex-wrap: wrap; 
-    width: 300px; 
-    height: 300px; 
-    border: 1px solid black;
+	justify-content: center;
+	align-items: center;
+	flex-wrap: wrap;
+	width: 300px;
+	height: 300px;
+	border: 1px solid black;
 }
 
 .gif-birds-left-container img {
@@ -605,8 +596,6 @@ margin-bottom: 10px;
 	color: white;
 	margin-top: 15px;
 	margin-left: 15px;
-
-
 }
 
 .dron-eq-have,
@@ -634,12 +623,11 @@ margin-bottom: 10px;
 	color: white;
 }
 
-.stats h2
-{
+.stats h2 {
 	font-weight: 900;
 	margin-top: 5px;
-
 }
+
 /*Центральный контейнер*/
 .center-container {
 	display: flex;
@@ -692,4 +680,9 @@ margin-bottom: 10px;
 	100% {
 		left: 100%;
 	}
+}
+
+.selectable-row {
+	border: 2px dashed red;
+	cursor: pointer;
 }

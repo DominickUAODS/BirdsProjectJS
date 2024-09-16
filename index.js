@@ -1,6 +1,6 @@
 import { startSpawning, stopSpawning } from "./birdManager.js";
 import { toggleContainers, initializePreloader, bindUpgradeButtons } from "./uiManager.js";
-import { updateUpgradeCosts, adjustBirdPointsRange } from "./upgrades.js"
+import { updateUpgradeCosts, adjustBirdPointsRange, startAutoClicker } from "./upgrades.js"
 import { updateStats } from "./points.js"
 
 document.getElementById("statistic-btn").addEventListener("click", toggleContainers);
@@ -30,6 +30,7 @@ document.addEventListener("DOMContentLoaded", () => {
 	}
 
 	let sessionStartTime = Date.now();
+	let autoClickerCount = localStorage.getItem("autoclicker");
 
 	startButton.addEventListener("click", () => {
 		sessionStartTime = Date.now();
@@ -39,6 +40,11 @@ document.addEventListener("DOMContentLoaded", () => {
 			localStorage.setItem("startTime", startTime);
 		}
 
+		if (autoClickerCount > 0) {
+			startAutoClicker(autoClickerCount, currentLevel);
+		}
+
+		window.isRowSelectionActive = false;
 	});
 
 	stopButton.addEventListener("click", () => {
@@ -55,7 +61,7 @@ document.addEventListener("DOMContentLoaded", () => {
 	updateUpgradeCosts(currentLevel);
 	adjustBirdPointsRange(currentLevel);
 	bindUpgradeButtons();
-	
+
 
 	// Audio
 	const muteToggle = document.getElementById("mute-toggle");
