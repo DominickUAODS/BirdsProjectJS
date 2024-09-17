@@ -137,6 +137,8 @@ html {
 	height: auto;
 }
 
+.bird-
+
 .img-diamant-top {
 	width: 30px;
 	height: 30px;
@@ -321,8 +323,8 @@ html {
 
 /*Кнопка звука*/
 .btn-volume {
-	width: 40px;
-	height: 40px;
+	width: 25px;
+	height: 25px;
 	border-radius: 100%;
 	background-color: rgb(71, 224, 230);
 	overflow: hidden;
@@ -379,7 +381,7 @@ html {
 }
 
 #volume-slider {
-	width: 100px;
+	width: 80px;
 	margin-left: 10px;
 }
 
@@ -613,8 +615,12 @@ html {
 }
 
 .left-container {
+	display: block;
+  }
+  
+  .left-container-stat {
 	display: none;
-}
+  }
 
 .stats {
 	font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
@@ -634,6 +640,15 @@ html {
 	justify-content: space-between;
 	align-items: top;
 	flex-direction: column;
+}
+
+.center-container img{
+	user-select: none;
+}
+
+.center-container div
+{
+	user-select: none;
 }
 
 .first-row,
